@@ -1,0 +1,27 @@
+{
+  "name": "is-academia-bot",
+  "version": "1.0.0",
+  "author": "CanardConfit",
+  "license": "UNLICENSED",
+  "repository": "https://github.com/CanardConfit/is-academia-bot.git",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore --fix src",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "node dist/src/index.js"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.2",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.21",
+    "prettier": "^2.8.4",
+    "typescript": "4.9.5"
+  }
+}
