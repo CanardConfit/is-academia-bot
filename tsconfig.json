@@ -1,6 +1,7 @@
 {
   "include": [
     "src",
+    ".eslintrc.js"
   ],
   "compilerOptions": {
     "target": "ESNext",

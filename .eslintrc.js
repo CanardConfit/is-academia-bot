@@ -8,11 +8,9 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended",
   ],
-  plugins: [
-      "@typescript-eslint"
-  ],
+  plugins: ["@typescript-eslint"],
   parserOptions: {
-    project: ["./tsconfig.json"]
+    project: ["./tsconfig.json"],
   },
   rules: {
     "no-console": "off",
@@ -24,5 +22,5 @@ module.exports = {
       },
     ],
   },
-  overrides: []
+  overrides: [],
 };
