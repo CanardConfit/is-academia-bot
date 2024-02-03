@@ -1,9 +1,6 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   root: true,
-  env: {
-    es2023: true,
-  },
   parser: "@typescript-eslint/parser",
   extends: [
     "eslint:recommended",
