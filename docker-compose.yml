@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  is-academia-bot:
+    image: ghcr.io/canardconfit/is-academia-bot:latest
+    container_name: is-academia-bot
+    restart: always

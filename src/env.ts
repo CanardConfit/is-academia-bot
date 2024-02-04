@@ -3,8 +3,17 @@ import { EnvType, load } from "ts-dotenv";
 export const schema = {
   NODE_ENV: String,
   DEBUG: String,
-  USERNAME: String,
-  PASSWORD: String,
+  SWITCH_USERNAME: String,
+  SWITCH_PASSWORD: String,
+  SWITCH_TOTP_SECRET: String,
+  MODULES_FILE: String,
+  CACHE_FOLDER: String,
+  GIT_ENABLED: Boolean,
+  GIT_FOLDER: String,
+  GIT_FILE: String,
+  DISCORD_ENABLED: Boolean,
+  DISCORD_ID: String,
+  DISCORD_TOKEN: String,
 };
 
 export let env: EnvType<typeof schema>;
