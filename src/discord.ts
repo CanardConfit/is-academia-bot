@@ -1,5 +1,5 @@
 import { EmbedBuilder, WebhookClient } from "discord.js";
-import { Difference } from "@/modules.ts";
+import { Difference } from "./modules";
 
 export const discord = (
   id: string,

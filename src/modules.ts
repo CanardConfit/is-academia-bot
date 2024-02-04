@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import * as fs from "fs";
 import * as cheerio from "cheerio";
-import { env } from "@/env.ts";
+import { env } from "./env";
 
 export interface Difference {
   module: Module;

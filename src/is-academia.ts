@@ -1,8 +1,8 @@
-import { env } from "@/env.ts";
 import puppeteer from "puppeteer";
 import { randomInt } from "node:crypto";
 import { TOTP } from "totp-generator";
-import { Module, parse } from "@/modules.ts";
+import { env } from "./env";
+import { Module, parse } from "./modules";
 import fs from "fs";
 
 function delay(time: number): Promise<void> {

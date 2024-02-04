@@ -5,3 +5,5 @@ services:
     image: ghcr.io/canardconfit/is-academia-bot:latest
     container_name: is-academia-bot
     restart: always
+    env_file:
+      - "D:/Users/Tom/Desktop/.env"

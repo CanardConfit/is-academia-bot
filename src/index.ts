@@ -1,11 +1,11 @@
-import { env, loadEnv } from "@/env.ts";
 import * as fs from "fs";
 import path from "node:path";
 import * as schedule from "node-schedule";
-import { gitHistory } from "@/git-history.ts";
-import getIsAcademiaNotes from "@/is-academia.ts";
-import { discord } from "@/discord.ts";
-import { findDifferences, Module, parseJsonToModules } from "@/modules.ts";
+import { env, loadEnv } from "./env";
+import { gitHistory } from "./git-history";
+import getIsAcademiaNotes from "./is-academia";
+import { discord } from "./discord";
+import { findDifferences, Module, parseJsonToModules } from "./modules";
 
 loadEnv();
 
