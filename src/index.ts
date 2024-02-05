@@ -51,3 +51,5 @@ schedule.scheduleJob("0 * * * *", async () => {
 console.log(
   "Le cron est prêt. La tâche sera exécutée toutes les heures à l'heure pile.",
 );
+
+void notes().then();

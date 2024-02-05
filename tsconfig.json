@@ -3,6 +3,10 @@
     "src/*",
     ".eslintrc.js"
   ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
   "compilerOptions": {
     "target": "ESNext",
     "module": "commonjs",

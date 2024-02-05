@@ -4,6 +4,10 @@ services:
   is-academia-bot:
     image: ghcr.io/canardconfit/is-academia-bot:latest
     container_name: is-academia-bot
+    cap_add:
+      - SYS_ADMIN
     restart: always
+    volumes:
+      - "./git-history:/apps/git-history"
     env_file:
-      - "D:/Users/Tom/Desktop/.env"
+      - "./.env"
