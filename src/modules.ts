@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import * as fs from "fs";
 import * as cheerio from "cheerio";
 import { env } from "./env";
+import { logger } from "./logger";
 
 export interface Difference {
   module: Module;
@@ -16,16 +17,16 @@ export const parseJsonToModules = (jsonString: string): Module[] => {
     const data: any[] = JSON.parse(jsonString);
 
     if (!Array.isArray(data)) {
-      throw new Error("Le JSON ne représente pas un tableau.");
+      throw new Error("The JSON does not represent an array.");
     }
 
-    const modules: Module[] = data.map((moduleData) => {
+    return data.map((moduleData) => {
       if (
         typeof moduleData.id !== "string" ||
         typeof moduleData.title !== "string"
       ) {
         throw new Error(
-          'Les propriétés "id" et "title" doivent être des chaînes de caractères.',
+          '"id" and "title" properties must be strings.',
         );
       }
 
@@ -38,7 +39,7 @@ export const parseJsonToModules = (jsonString: string): Module[] => {
             typeof courseData.title !== "string"
           ) {
             throw new Error(
-              'Les propriétés "id" et "title" des cours doivent être des chaînes de caractères.',
+              '"id" and "title" properties of courses must be strings.',
             );
           }
 
@@ -53,7 +54,7 @@ export const parseJsonToModules = (jsonString: string): Module[] => {
                 typeof noteData.note !== "number"
               ) {
                 throw new Error(
-                  "Les propriétés des notes doivent être conformes au modèle.",
+                  "Properties of notes must conform to the model.",
                 );
               }
 
@@ -73,12 +74,8 @@ export const parseJsonToModules = (jsonString: string): Module[] => {
 
       return module;
     });
-
-    return modules;
   } catch (error: any) {
-    console.error(
-      `Erreur lors de la conversion JSON vers Module[] : ${error.message}`,
-    );
+    logger.error(`Error converting JSON to Module[]: ${error.message}`);
     return [];
   }
 };
@@ -115,7 +112,6 @@ export const findDifferences = (
             }
           });
 
-          // Vérifier s'il y a des nouvelles notes
           newCourse.notes.forEach((newNote) => {
             const oldNote = oldCourse.notes.find(
               (note) => note.title === newNote.title,
@@ -131,7 +127,6 @@ export const findDifferences = (
             }
           });
 
-          // Vérifier s'il y a des notes supprimées
           oldCourse.notes.forEach((oldNote) => {
             const newNote = newCourse.notes.find(
               (note) => note.title === oldNote.title,
@@ -162,14 +157,12 @@ function parseModulesFromFile(filePath: string): Module[] {
     const parsedData: any[] = JSON.parse(fileContent);
 
     if (!Array.isArray(parsedData)) {
-      throw new Error("Le contenu du fichier n'est pas un tableau JSON.");
+      throw new Error("File content is not a JSON array.");
     }
 
     const modules: Module[] = parsedData.map((data: any) => {
       if (typeof data.id !== "string" || typeof data.title !== "string") {
-        throw new Error(
-          'Les propriétés "id" et "title" doivent être des chaînes de caractères.',
-        );
+        throw new Error('"id" and "title" properties must be strings.');
       }
 
       return new Module(data.id, data.title);
@@ -177,9 +170,7 @@ function parseModulesFromFile(filePath: string): Module[] {
 
     return modules;
   } catch (error: any) {
-    console.error(
-      `Erreur lors de la lecture et du parsage du fichier : ${error.message}`,
-    );
+    logger.error(`Error reading and parsing the file: ${error.message}`);
     return [];
   }
 }
@@ -201,7 +192,7 @@ export const parse = (html: string): Module[] => {
     const noteCells = $(thead).find("th.cc-inscr-titre");
 
     noteCells.each((index, noteCell) => {
-      const noteTitle = $(thead).find("th.cc-inscr-titre").eq(index).text().trim();
+      const noteTitle = $(noteCell).text().trim();
       const note = $(tbody).find("td.cc-inscr-note").eq(index);
       const noteValue = parseFloat(note.text().trim() || "0");
 
@@ -212,20 +203,17 @@ export const parse = (html: string): Module[] => {
       const coefficientCell = $(thead).find("th.cc-inscr-coeff").eq(index);
       const coefficient = parseFloat(coefficientCell.text().trim() || "0");
 
-      const noteInstance = new Note(
+      notes.push(new Note(
         noteTitle,
         new Date(parseInt(dateParts[2], 10),
           parseInt(dateParts[1], 10) - 1,
-          parseInt(dateParts[0], 10),
-        ),
+          parseInt(dateParts[0], 10)),
         coefficient,
         noteValue,
-      );
-      notes.push(noteInstance);
+      ));
     });
 
-    const courseInstance = new Course(id, title, professors, notes);
-    courses.push(courseInstance);
+    courses.push(new Course(id, title, professors, notes));
   });
 
   const modules: Module[] = parseModulesFromFile(env.MODULES_FILE);
