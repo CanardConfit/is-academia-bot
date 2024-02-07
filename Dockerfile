@@ -1,6 +1,4 @@
-ARG TARGERARCH
-
-FROM --platform=${TARGETARCH} ghcr.io/puppeteer/puppeteer:latest
+FROM canardconfit/puppeteer-docker:latest
 
 LABEL org.opencontainers.image.authors = "CanardConfit"
 LABEL org.opencontainers.image.source = "https://github.com/CanardConfit/is-academia-bot"
