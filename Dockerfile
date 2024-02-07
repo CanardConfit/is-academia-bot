@@ -1,9 +1,7 @@
-ARG TARGETPLATFORM
-
 FROM ghcr.io/puppeteer/puppeteer:21.5.2 as base-amd64
 FROM canardconfit/puppeteer-docker:puppeteer-21.5.2-arm64 as base-arm64
 
-FROM base-${TARGETPLATFORM}
+FROM base-${TARGETARCH}
 
 LABEL org.opencontainers.image.authors = "CanardConfit"
 LABEL org.opencontainers.image.source = "https://github.com/CanardConfit/is-academia-bot"
