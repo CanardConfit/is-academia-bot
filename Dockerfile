@@ -1,4 +1,6 @@
-FROM ghcr.io/puppeteer/puppeteer:latest
+ARG TARGERARCH
+
+FROM --platform=${TARGETARCH} ghcr.io/puppeteer/puppeteer:latest
 
 LABEL org.opencontainers.image.authors = "CanardConfit"
 LABEL org.opencontainers.image.source = "https://github.com/CanardConfit/is-academia-bot"
@@ -16,17 +18,10 @@ RUN yarn
 
 COPY . ./
 
-ARG GIT_USERNAME
-ARG GIT_PASSWORD
-
-RUN git config --global credential.helper '!f() { echo "username=${GIT_USERNAME}"; echo "password=${GIT_PASSWORD}"; }; f'
-
 RUN yarn build
 
-RUN chown pptruser:pptruser -R /app
+RUN git config --global --add safe.directory '*'
 
-RUn chmod 755 -R /app
-
-USER pptruser
+VOLUME ["/app/git-history"]
 
 CMD ["yarn", "start"]

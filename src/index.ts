@@ -12,6 +12,9 @@ loadEnv();
 
 const notes = async () => {
   logger.info("Starting the notes processing task.");
+
+  const gitFolder = "git-history";
+
   if (!fs.existsSync(env.CACHE_FOLDER)) {
     fs.mkdirSync(env.CACHE_FOLDER, { recursive: true });
     logger.info(`Created cache folder at: ${env.CACHE_FOLDER}`);
@@ -22,7 +25,7 @@ const notes = async () => {
   let oldModules: Module[] = [];
 
   if (env.GIT_ENABLED) {
-    const gitFile = path.join(env.GIT_FOLDER, env.GIT_FILE);
+    const gitFile = path.join(gitFolder, env.GIT_FILE);
     if (fs.existsSync(gitFile)) {
       oldModules = parseJsonToModules(fs.readFileSync(gitFile, "utf-8"));
       logger.info("Loaded old modules from the git repository.");
@@ -40,13 +43,13 @@ const notes = async () => {
     logger.info("No differences found between old and new modules.");
   }
 
+  //TODO: TMP
+  //logger.info(newModules.map((module)=>module.toString()).join("\n"));
+
   if (env.GIT_ENABLED) {
     await gitHistory(
-      env.GIT_FOLDER,
-      tmpFile,
-      env.GIT_FILE,
-      env.GIT_REMOTE,
-      env.GIT_BRANCH,
+      gitFolder,
+      tmpFile
     );
     logger.info("Updated git history with new modules.");
   }

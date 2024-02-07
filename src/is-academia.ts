@@ -26,12 +26,8 @@ const getIsAcademiaNotes = async (
    * Launching Puppeteer browser
    */
   const browser = await puppeteer.launch({
-    headless: false,
-    args: [`--window-size=1920,1080`],
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = (await browser.pages())[0];
 
