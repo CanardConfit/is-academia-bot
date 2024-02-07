@@ -293,10 +293,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node-schedule@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@types/node-schedule/-/node-schedule-2.1.5.tgz#1d458577f3ad94b7a7d342241983f6cef27a772e"
-  integrity sha512-bN0MiplDBUxNMmlEi4iykjLYD7+Ze3DEevzliCn8WYuDwYSPj/5XFh8wZw+YXPLpLxiNWlIONYiQ67g/vowSMA==
+"@types/node-schedule@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@types/node-schedule/-/node-schedule-2.1.6.tgz#9bf790a929735080521ef893cba7e4dce9ea14e9"
+  integrity sha512-6AlZSUiNTdaVmH5jXYxX9YgmF1zfOlbjUqw0EllTBmZCnN1R5RR/m/u3No1OiWR05bnQ4jM4/+w4FcGvkAtnKQ==
   dependencies:
     "@types/node" "*"
 

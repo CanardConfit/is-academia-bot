@@ -47,10 +47,7 @@ const notes = async () => {
   //logger.info(newModules.map((module)=>module.toString()).join("\n"));
 
   if (env.GIT_ENABLED) {
-    await gitHistory(
-      gitFolder,
-      tmpFile
-    );
+    await gitHistory(gitFolder, tmpFile);
     logger.info("Updated git history with new modules.");
   }
 
