@@ -1,14 +1,16 @@
-FROM canardconfit/puppeteer-docker:latest
+FROM canardconfit/puppeteer-docker:test
 
 LABEL org.opencontainers.image.authors = "CanardConfit"
 LABEL org.opencontainers.image.source = "https://github.com/CanardConfit/is-academia-bot"
 LABEL org.opencontainers.image.description = "IS-Academia Bot for HEPIA"
 
-WORKDIR /app
-
 USER root
 
 RUN apt-get install -y git
+
+WORKDIR /home/pptruser
+
+#USER pptruser
 
 COPY package.json yarn.lock ./
 
