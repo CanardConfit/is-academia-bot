@@ -117,15 +117,12 @@ const getIsAcademiaNotes = async (
   await page.waitForFunction(() => document.readyState === "complete");
   await humanDelay();
 
-  const selectorNavNotes = "//li[@id='410']";
-  await page.waitForXPath(selectorNavNotes);
-  const button0 = (
-    await page.$x(selectorNavNotes)
-  )[0] as unknown as ElementHandle;
-
-  if (button0) {
-    await button0.click();
-  }
+  await page.evaluate(() => {
+    const element = document.getElementById("410");
+    if (element) {
+      element.click();
+    }
+  });
 
   await humanDelay();
 
