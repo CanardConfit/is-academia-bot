@@ -1,25 +1,29 @@
 # IS-Academia Bot
 
+![Docker Pulls](https://img.shields.io/docker/pulls/canardconfit/is-academia-bot)
+![GitHub Release](https://img.shields.io/github/v/release/CanardConfit/is-academia-bot)
+![GitHub Repo stars](https://img.shields.io/github/stars/CanardConfit/is-academia-bot)
+
+## Introduction
+
 IS-Academia Bot is an automated tool designed to fetch, analyze, and report changes in course modules from the IS-Academia platform, commonly used by academic institutions to manage course registrations, grades, and schedules. This bot simplifies tracking changes in course details, offering notifications through Discord and updates via a Git repository.
 
-## Features
+> **Note**: This bot is currently designed to work with the HES-SO website (https://age.hes-so.ch) and the SWITCH Edu-Id connection. If you are not within these settings, you may need to modify the program to make this work for you.
 
-odule Tracking: Automatically tracks changes in course modules.
-Discord Notifications: Sends updates directly to a specified Discord channel.
-Git Version Control: Maintains a version-controlled history of module changes.
-Flexible Configuration: Customizable to monitor specific courses or semesters.
+## Table of Contents
 
-## How It Works
+- [Introduction](#Introduction)
+- [Installation](#Installation)
+  - [Local Installation](#Local-Installation)
+  - [Installation with Docker](#Installation-with-Docker)
+- [Environment Configuration](#Environment-Configuration)
+- [Features](#Features)
+- [How It Works](#How-It-Works)
+- [Contributing](#Contributing)
+- [License](#License)
 
-IS-Academia Bot scrapes the IS-Academia webpage for the specified courses or modules, compares the fetched data with the previously stored state, and identifies any changes. On detecting updates, it commits these changes to a Git repository and optionally sends notifications through Discord.
 
 ## Installation
-
-### Prerequisites
-
-- Node.js (v14 or newer)
-- npm or yarn
-- Docker (optional for Docker-based installation)
 
 ### Local Installation
 
@@ -49,18 +53,38 @@ yarn start
 
 ### Installation with Docker
 
-1. Ensure Docker is installed and running on your system.
-2. Build the Docker image:
+The Docker image can be pulled from Docker Hub, here (ghcr.io) or Quay.io:
+```sh
+# Docker Hub
+docker pull canardconfit/is-academia-bot
 
-```bash
-docker build -t is-academia-bot .
-```
-3. Run the bot inside a Docker container. Make sure to mount the .env file or pass environment variables accordingly:
+# ghcr.io
+docker pull ghcr.io/canardconfit/is-academia-bot
 
-```bash
-docker run --name is-academia-bot -d is-academia-bot
+# Quay.io
+docker pull quay.io/canardconfit/is-academia-bot
 ```
-## Configuration
+
+Docker compose file:
+```yml
+version: '3'
+
+services:
+  is-academia-bot:
+    image: canardconfit/is-academia-bot:latest
+    container_name: is-academia-bot
+    restart: always
+    volumes:
+      - "./git-history:/app/git-history"
+    env_file:
+      - "./environment.env"
+```
+
+> **Note**: Create `environment.env` file with a copy of .env.example
+
+From file [docker-compose.yml](./docker-compose.yml).
+
+## Environment Configuration
 
 Configure the bot by editing the .env file. Essential configurations include:
 
@@ -70,10 +94,21 @@ Configure the bot by editing the .env file. Essential configurations include:
 
 For more details on configuration options, refer to the `.env.example` file.
 
+## Features
+
+Module Tracking: Automatically tracks changes in course modules.
+Discord Notifications: Sends updates directly to a specified Discord channel.
+Git Version Control: Maintains a version-controlled history of module changes.
+Flexible Configuration: Customizable to monitor specific courses or semesters.
+
+## How It Works
+
+IS-Academia Bot scrapes the IS-Academia webpage for the specified courses or modules, compares the fetched data with the previously stored state, and identifies any changes. On detecting updates, it commits these changes to a Git repository and optionally sends notifications through Discord.
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit pull requests with your improvements. For major changes, open an issue first to discuss what you would like to change.
 
 ## License
 
-MIT License
+[Apache 2.0 License](./LICENSE)
