@@ -7,7 +7,7 @@ import getIsAcademiaNotes from "./is-academia";
 import { discord } from "./discord";
 import { findDifferences, Module, parseJsonToModules } from "./modules";
 import { logger } from "./logger";
-
+import { telegram } from "./telegram";
 loadEnv();
 
 const notes = async () => {
@@ -54,6 +54,11 @@ const notes = async () => {
   if (env.DISCORD_ENABLED) {
     logger.info("Sent differences to Discord.");
     discord(env.DISCORD_ID, env.DISCORD_TOKEN, differences);
+  }
+
+  if (env.TELEGRAM_ENABLED) {
+    logger.info("Sent differences to Telegram.");
+    telegram(env.TELEGRAM_TOKEN, env.TELEGRAM_CHAT_ID, differences);
   }
 };
 

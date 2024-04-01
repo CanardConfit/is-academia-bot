@@ -18,6 +18,9 @@ export const schema = {
   DISCORD_ENABLED: Boolean,
   DISCORD_ID: String,
   DISCORD_TOKEN: String,
+  TELEGRAM_ENABLED: Boolean,
+  TELEGRAM_TOKEN: String,
+  TELEGRAM_CHAT_ID: String,
 };
 
 export let env: EnvType<typeof schema>;
