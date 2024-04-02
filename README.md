@@ -6,7 +6,9 @@
 
 ## Introduction
 
-IS-Academia Bot is an automated tool designed to fetch, analyze, and report changes in course modules from the IS-Academia platform, commonly used by academic institutions to manage course registrations, grades, and schedules. This bot simplifies tracking changes in course details, offering notifications through Discord and updates via a Git repository.
+IS-Academia Bot is an automated tool designed to fetch, analyze, and report changes in course modules from the IS-Academia platform, commonly used by 
+academic institutions to manage course registrations, grades, and schedules.
+This bot simplifies tracking changes in course details, offering notifications through various channels and updates via a Git repository.
 
 > **Note**: This bot is currently designed to work with the HES-SO website (https://age.hes-so.ch) and the SWITCH Edu-Id connection. If you are not within these settings, you may need to modify the program to make this work for you.
 
@@ -89,21 +91,29 @@ From file [docker-compose.yml](./docker-compose.yml).
 Configure the bot by editing the .env file. Essential configurations include:
 
 - **SWITCH_USERNAME** and **SWITCH_PASSWORD** for IS-Academia login.
-- **DISCORD_ID** and **DISCORD_TOKEN** for Discord notifications.
 - **GIT_REMOTE**, **GIT_BRANCH**, **GIT_FOLDER** and **GIT_FILE** for Git repository details.
+- **DISCORD_ID** and **DISCORD_TOKEN** for Discord notifications.
+- **TELEGRAM_TOKEN** and **TELEGRAM_CHAT_ID** for Telegram notifications.
 
 For more details on configuration options, refer to the `.env.example` file.
 
 ## Features
 
 Module Tracking: Automatically tracks changes in course modules.
-Discord Notifications: Sends updates directly to a specified Discord channel.
+
 Git Version Control: Maintains a version-controlled history of module changes.
+
 Flexible Configuration: Customizable to monitor specific courses or semesters.
+
+Notification Support: Sends notifications through different channels :
+
+- Discord via Webhook
+- Telegram via Bot API
 
 ## How It Works
 
-IS-Academia Bot scrapes the IS-Academia webpage for the specified courses or modules, compares the fetched data with the previously stored state, and identifies any changes. On detecting updates, it commits these changes to a Git repository and optionally sends notifications through Discord.
+IS-Academia Bot scrapes the IS-Academia webpage for the specified courses or modules, compares the fetched data with the previously stored state, and identifies any changes.
+On detecting updates, it commits these changes to a Git repository and optionally sends notifications through the configured channels.
 
 ## Contributing
 
