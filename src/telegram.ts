@@ -9,19 +9,14 @@ import { Telegraf } from "telegraf";
  * @param chatId The chat ID to send the message to.
  * @param differences The differences to report.
  */
-export const telegram = (
+export const telegramSendUpdates = (
   token: string,
   chatId: string,
   differences: Difference[],
 ) => {
-  if (differences.length === 0) {
-    logger.info("No differences to report to Telegram.");
-    return;
-  }
-
   const bot = new Telegraf(token);
 
-  logger.info(`Sending ${differences.length} updates to Telegram.`);
+  logger.info(`Telegram service : sending ${differences.length} updates.`);
 
   differences.forEach((difference, index) => {
     const isNewNote = difference.oldNote === undefined;
@@ -37,12 +32,12 @@ export const telegram = (
       .sendMessage(chatId, message, { parse_mode: "Markdown" })
       .then(() => {
         logger.info(
-          `Successfully sent update ${index + 1} of ${differences.length} to Telegram.`,
+          `Telegram service : successfully sent update ${index + 1} of ${differences.length}.`,
         );
       })
       .catch((error) => {
         logger.error(
-          `Failed to send update ${index + 1} of ${differences.length} to Telegram. Error: ${error}`,
+          `Telegram service : failed to send update ${index + 1} of ${differences.length}. Error: ${error}`,
         );
       });
   });
@@ -54,18 +49,7 @@ export const telegram = (
  * @returns The text with escaped Markdown characters.
  */
 function escapeMarkdown(text: string): string {
-  const specialChars = [
-    "*",
-    "_",
-    "#",
-    "[",
-    "]",
-    "`",
-    ">",
-    "+",
-    ".",
-    "!",
-  ];
+  const specialChars = ["*", "_", "#", "[", "]", "`", ">", "+", ".", "!"];
   specialChars.forEach((char) => {
     text = text.replace(new RegExp(`\\${char}`, "g"), `\\${char}`);
   });

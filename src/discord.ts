@@ -7,14 +7,9 @@ export const discord = (
   token: string,
   differences: Difference[],
 ) => {
-  if (differences.length === 0) {
-    logger.info("No differences to report to Discord.");
-    return;
-  }
-
   const client = new WebhookClient({ id: id, token: token });
 
-  logger.info(`Sending ${differences.length} updates to Discord.`);
+  logger.info(`Discord service : sending ${differences.length} updates.`);
 
   differences.forEach((difference, index) => {
     const embed = new EmbedBuilder()
@@ -52,12 +47,12 @@ export const discord = (
       })
       .then(() => {
         logger.info(
-          `Successfully sent update ${index + 1} of ${differences.length} to Discord.`,
+          `Discord service : successfully sent update ${index + 1} of ${differences.length}.`,
         );
       })
       .catch((error) => {
         logger.error(
-          `Failed to send update ${index + 1} of ${differences.length} to Discord. Error: ${error}`,
+          `Discord service : failed to send update ${index + 1} of ${differences.length}. Error: ${error}`,
         );
       });
   });
