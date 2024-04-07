@@ -107,7 +107,7 @@ export const findDifferences = (
                 module: oldModule,
                 course: oldCourse,
                 oldNote: oldNote,
-                newNote: oldNote,
+                newNote: newNote,
               });
             }
           });
