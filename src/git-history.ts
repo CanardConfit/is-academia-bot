@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import path from "node:path";
-import { simpleGit, SimpleGit } from "simple-git";
+import {CheckRepoActions, simpleGit, SimpleGit} from "simple-git";
 import { format } from "date-fns";
 import { env } from "./env";
 import { logger } from "./logger";
@@ -24,10 +24,10 @@ export const gitHistory = async (
   tmpFile: string,
 ): Promise<boolean> => {
   /*
-   * Create Git Folder
+   * Ensure Git folder exists
    */
   if (!fs.existsSync(gitFolder)) {
-    logger.info("Git folder must exist.");
+    logger.info(`Git folder (${gitFolder}) must exist on your local machine.`);
     return false;
   }
 
@@ -38,7 +38,7 @@ export const gitHistory = async (
   /*
    * Init Git Repo if not exist
    */
-  const isRepo = await git.checkIsRepo();
+  const isRepo = await git.checkIsRepo(CheckRepoActions.IS_REPO_ROOT);
   if (!isRepo) {
     await git.init();
     logger.info("Initialized a new git repository.");
