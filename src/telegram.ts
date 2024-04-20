@@ -28,7 +28,7 @@ export const telegramSendUpdates = (
     message += `Ancienne: *${difference.oldNote?.note.toString() || "Non définie"}*\n`;
     message += `Nouvelle : *${difference.newNote?.note.toString() || "Non définie"}*`;
 
-    void bot.telegram
+    bot.telegram
       .sendMessage(chatId, message, { parse_mode: "Markdown" })
       .then(() => {
         logger.info(
