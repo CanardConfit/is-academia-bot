@@ -7,7 +7,7 @@ import getIsAcademiaNotes from "./is-academia";
 import { discord } from "./discord";
 import { findDifferences, Module, parseJsonToModules } from "./modules";
 import { logger } from "./logger";
-
+import { telegramSendUpdates } from "./telegram";
 loadEnv();
 
 const notes = async () => {
@@ -37,23 +37,31 @@ const notes = async () => {
 
   const differences = findDifferences(oldModules, newModules);
 
-  if (differences.length > 0) {
-    logger.info("Found differences between old and new modules.");
-  } else {
-    logger.info("No differences found between old and new modules.");
-  }
-
-  //TODO: TMP
-  //logger.info(newModules.map((module)=>module.toString()).join("\n"));
-
   if (env.GIT_ENABLED) {
     await gitHistory(gitFolder, tmpFile);
     logger.info("Updated git history with new modules.");
   }
 
-  if (env.DISCORD_ENABLED) {
-    logger.info("Sent differences to Discord.");
-    discord(env.DISCORD_ID, env.DISCORD_TOKEN, differences);
+  if (differences.length === 0) {
+    logger.info(
+      "No differences found between old and new modules. No notifications sent.",
+    );
+  } else {
+    logger.info("Found differences between old and new modules.");
+
+    if (env.DISCORD_ENABLED) {
+      logger.info("Sending differences to Discord service.");
+      discord(env.DISCORD_ID, env.DISCORD_TOKEN, differences);
+    }
+
+    if (env.TELEGRAM_ENABLED) {
+      logger.info("Sending differences to Telegram service.");
+      telegramSendUpdates(
+        env.TELEGRAM_TOKEN,
+        env.TELEGRAM_CHAT_ID,
+        differences,
+      );
+    }
   }
 };
 
