@@ -22,6 +22,9 @@ const notes = async () => {
 
   const tmpFile = path.join(env.CACHE_FOLDER, "tmpModuleFile.json");
 
+  const newModules = await getIsAcademiaNotes(tmpFile);
+  logger.info("Retrieved new modules from IsAcademia.");
+
   let oldModules: Module[] = [];
 
   if (env.GIT_ENABLED) {
@@ -29,11 +32,11 @@ const notes = async () => {
     if (fs.existsSync(gitFile)) {
       oldModules = parseJsonToModules(fs.readFileSync(gitFile, "utf-8"));
       logger.info("Loaded old modules from the git repository.");
+    } else {
+      logger.info("File doesn't exist, it will be created.");
+      fs.copyFileSync(tmpFile, gitFile);
     }
   }
-
-  const newModules = await getIsAcademiaNotes(tmpFile);
-  logger.info("Retrieved new modules from IsAcademia.");
 
   const differences = findDifferences(oldModules, newModules);
 

@@ -28,6 +28,7 @@ jspm_packages/
 .eslintcache
 
 # dotenv environment variable files
+environment.env
 .env
 
 # Typescript build / generate output
