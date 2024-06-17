@@ -87,6 +87,22 @@ export const findDifferences = (
 ): Difference[] => {
   const differences: Difference[] = [];
 
+  if (oldModules.length == 0) {
+    newModules.forEach((module) => {
+      module.courses.forEach((course) => {
+        course.notes.forEach((note) => {
+          differences.push({
+            module: module,
+            course: course,
+            oldNote: undefined,
+            newNote: note,
+          });
+        });
+      });
+    });
+    return differences;
+  }
+
   oldModules.forEach((oldModule) => {
     const newModule = newModules.find((module) => module.id === oldModule.id);
 
