@@ -1,0 +1,26 @@
+[
+    {
+        "id": "ISC_31",
+        "title": "Humanités 2"
+    },
+    {
+        "id": "ISC_32",
+        "title": "Sciences en ISC 2"
+    },
+    {
+        "id": "ISC_34",
+        "title": "Projet d'intégration 1"
+    },
+    {
+        "id": "ISC_33",
+        "title": "Systèmes informatiques 1"
+    },
+    {
+        "id": "ISC_E32",
+        "title": "Sécurité matérielle"
+    },
+    {
+        "id": "ISC_E31",
+        "title": "Systèmes d'exploitation embarqués"
+    }
+]
