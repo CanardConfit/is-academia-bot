@@ -69,11 +69,23 @@ const getIsAcademiaNotes = async (
   /*
    * Clicking the login button after entering username to show up password field
    */
-  const selectorLoginButton = "#login-button";
+  const selectorLoginButton = "#button-submit";
   await page.waitForSelector(selectorLoginButton);
   await page.click(selectorLoginButton);
 
   await humanDelay();
+
+  /*
+   * Handling the passkey proposition
+   */
+  if ((await page.$("#passkey-button")) !== null) {
+    logger.info("Passkey proposed, choose password.");
+    const selectorPassword = `a[name="to-password"]`;
+    await page.waitForSelector(selectorPassword);
+    await page.click(selectorPassword);
+
+    await humanDelay();
+  }
 
   /*
    * Typing the password of Switch-Edu-ID
@@ -87,8 +99,9 @@ const getIsAcademiaNotes = async (
   /*
    * Clicking the login button after entering password
    */
-  await page.waitForSelector(selectorLoginButton);
-  await page.click(selectorLoginButton);
+  const selectorConnection = "#button-proceed";
+  await page.waitForSelector(selectorConnection);
+  await page.click(selectorConnection);
 
   await humanDelay();
 
@@ -112,7 +125,15 @@ const getIsAcademiaNotes = async (
   }
 
   /*
-   * Navigation to "Notes des contrôles continus" after login
+   * Navigate to "Portail étudiant HES" after login
+   */
+  await page.waitForFunction(() => document.readyState === "complete");
+  await humanDelay();
+
+  await page.goto("https://age.hes-so.ch/imoniteur_AGEP/!portal4s.htm");
+
+  /*
+   * Navigation to "Notes des contrôles continus"
    */
   await page.waitForFunction(() => document.readyState === "complete");
   await humanDelay();
@@ -121,6 +142,8 @@ const getIsAcademiaNotes = async (
     const element = document.getElementById("410");
     if (element) {
       element.click();
+    } else {
+      throw new Error("Unable to find 'Notes des contrôles continus'");
     }
   });
 
@@ -137,6 +160,8 @@ const getIsAcademiaNotes = async (
 
   if (button1) {
     await button1.click();
+  } else {
+    throw new Error("Unable to find Semester button.");
   }
 
   await humanDelay();

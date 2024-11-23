@@ -34,3 +34,4 @@ environment.env
 .cache
 
 git-history/
+.gitconfig
