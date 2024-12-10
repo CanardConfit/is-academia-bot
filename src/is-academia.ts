@@ -23,7 +23,7 @@ const getIsAcademiaNotes = async (tmpFile: string, writeTmpFile = true): Promise
      * Launching Puppeteer browser
      */
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     const page = (await browser.pages())[0];
