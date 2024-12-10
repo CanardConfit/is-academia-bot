@@ -5,10 +5,10 @@ import { env } from "./env";
 import { logger } from "./logger";
 
 export interface Difference {
-  module: Module;
-  course: Course;
-  oldNote?: Note;
-  newNote?: Note;
+    module: Module;
+    course: Course;
+    oldNote?: Note;
+    newNote?: Note;
 }
 
 /* eslint-disable */
@@ -81,88 +81,77 @@ export const parseJsonToModules = (jsonString: string): Module[] => {
 };
 /* eslint-enable */
 
-export const findDifferences = (
-  oldModules: Module[],
-  newModules: Module[],
-): Difference[] => {
-  const differences: Difference[] = [];
+export const findDifferences = (oldModules: Module[], newModules: Module[]): Difference[] => {
+    const differences: Difference[] = [];
 
-  if (oldModules.length == 0) {
-    newModules.forEach((module) => {
-      module.courses.forEach((course) => {
-        course.notes.forEach((note) => {
-          differences.push({
-            module: module,
-            course: course,
-            oldNote: undefined,
-            newNote: note,
-          });
+    if (oldModules.length == 0) {
+        newModules.forEach((module) => {
+            module.courses.forEach((course) => {
+                course.notes.forEach((note) => {
+                    differences.push({
+                        module: module,
+                        course: course,
+                        oldNote: undefined,
+                        newNote: note,
+                    });
+                });
+            });
         });
-      });
-    });
-    return differences;
-  }
-
-  oldModules.forEach((oldModule) => {
-    const newModule = newModules.find((module) => module.id === oldModule.id);
-
-    if (newModule) {
-      oldModule.courses.forEach((oldCourse) => {
-        const newCourse = newModule.courses.find(
-          (course) => course.id === oldCourse.id,
-        );
-
-        if (newCourse) {
-          oldCourse.notes.forEach((oldNote) => {
-            const newNote = newCourse.notes.find(
-              (note) => note.title === oldNote.title,
-            );
-
-            if (newNote && oldNote.note !== newNote.note) {
-              differences.push({
-                module: oldModule,
-                course: oldCourse,
-                oldNote: oldNote,
-                newNote: newNote,
-              });
-            }
-          });
-
-          newCourse.notes.forEach((newNote) => {
-            const oldNote = oldCourse.notes.find(
-              (note) => note.title === newNote.title,
-            );
-
-            if (!oldNote) {
-              differences.push({
-                module: oldModule,
-                course: oldCourse,
-                oldNote: oldNote,
-                newNote: newNote,
-              });
-            }
-          });
-
-          oldCourse.notes.forEach((oldNote) => {
-            const newNote = newCourse.notes.find(
-              (note) => note.title === oldNote.title,
-            );
-
-            if (!newNote) {
-              differences.push({
-                module: oldModule,
-                course: oldCourse,
-                oldNote: oldNote,
-                newNote: newNote,
-              });
-            }
-          });
-        }
-      });
+        return differences;
     }
-  });
 
-  return differences;
+    oldModules.forEach((oldModule) => {
+        const newModule = newModules.find((module) => module.id === oldModule.id);
+
+        if (newModule) {
+            oldModule.courses.forEach((oldCourse) => {
+                const newCourse = newModule.courses.find((course) => course.id === oldCourse.id);
+
+                if (newCourse) {
+                    oldCourse.notes.forEach((oldNote) => {
+                        const newNote = newCourse.notes.find((note) => note.title === oldNote.title);
+
+                        if (newNote && oldNote.note !== newNote.note) {
+                            differences.push({
+                                module: oldModule,
+                                course: oldCourse,
+                                oldNote: oldNote,
+                                newNote: newNote,
+                            });
+                        }
+                    });
+
+                    newCourse.notes.forEach((newNote) => {
+                        const oldNote = oldCourse.notes.find((note) => note.title === newNote.title);
+
+                        if (!oldNote) {
+                            differences.push({
+                                module: oldModule,
+                                course: oldCourse,
+                                oldNote: oldNote,
+                                newNote: newNote,
+                            });
+                        }
+                    });
+
+                    oldCourse.notes.forEach((oldNote) => {
+                        const newNote = newCourse.notes.find((note) => note.title === oldNote.title);
+
+                        if (!newNote) {
+                            differences.push({
+                                module: oldModule,
+                                course: oldCourse,
+                                oldNote: oldNote,
+                                newNote: newNote,
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    return differences;
 };
 
 /* eslint-disable */
@@ -247,92 +236,89 @@ export const parse = (html: string): Module[] => {
 /* eslint-enable */
 
 export class Note {
-  title: string;
-  date: Date;
-  coefficient: number;
-  note: number;
+    title: string;
+    date: Date;
+    coefficient: number;
+    note: number;
 
-  constructor(title: string, date: Date, coefficient: number, note: number) {
-    this.title = title;
-    this.date = date;
-    this.coefficient = coefficient;
-    this.note = note;
-  }
+    constructor(title: string, date: Date, coefficient: number, note: number) {
+        this.title = title;
+        this.date = date;
+        this.coefficient = coefficient;
+        this.note = note;
+    }
 
-  toString(): string {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    return `${this.title} | ${format(this.date, "dd-MM-yyyy")} | ${this.coefficient} | ${this.note}`;
-  }
+    toString(): string {
+        return `${this.title} | ${format(this.date, "dd-MM-yyyy")} | ${this.coefficient} | ${this.note}`;
+    }
 }
 
 export class Course {
-  id: string;
-  title: string;
-  professors: string[];
-  notes: Note[];
+    id: string;
+    title: string;
+    professors: string[];
+    notes: Note[];
 
-  constructor(id: string, title: string, professors: string[], notes: Note[]) {
-    this.id = id;
-    this.title = title;
-    this.professors = professors;
-    this.notes = notes;
-  }
+    constructor(id: string, title: string, professors: string[], notes: Note[]) {
+        this.id = id;
+        this.title = title;
+        this.professors = professors;
+        this.notes = notes;
+    }
 
-  average(): number {
-    let coefficient = 0;
-    let sum = 0;
+    average(): number {
+        let coefficient = 0;
+        let sum = 0;
 
-    this.notes.forEach((note) => {
-      if (note.note != 0) {
-        sum += note.note * note.coefficient;
-        coefficient += note.coefficient;
-      }
-    });
+        this.notes.forEach((note) => {
+            if (note.note != 0) {
+                sum += note.note * note.coefficient;
+                coefficient += note.coefficient;
+            }
+        });
 
-    let average = parseFloat(
-      (Math.round((sum / coefficient) * 10) / 10).toFixed(1),
-    );
+        let average = parseFloat((Math.round((sum / coefficient) * 10) / 10).toFixed(1));
 
-    if (isNaN(average)) average = 0;
+        if (isNaN(average)) average = 0;
 
-    return average;
-  }
+        return average;
+    }
 
-  toString(): string {
-    return `\n## ${this.id} - ${this.title}\n\nTitle|Date|Coefficient|Note\n-|-|-|-\n${this.notes.map<string>((note) => note.toString()).join("\n")}\nAverage|||${this.average()}`;
-  }
+    toString(): string {
+        return `\n## ${this.id} - ${this.title}\n\nTitle|Date|Coefficient|Note\n-|-|-|-\n${this.notes.map<string>((note) => note.toString()).join("\n")}\nAverage|||${this.average()}`;
+    }
 }
 
 export class Module {
-  id: string;
-  title: string;
-  courses: Course[] = [];
+    id: string;
+    title: string;
+    courses: Course[] = [];
 
-  constructor(id: string, title: string) {
-    this.id = id;
-    this.title = title;
-  }
+    constructor(id: string, title: string) {
+        this.id = id;
+        this.title = title;
+    }
 
-  addCourse(course: Course): void {
-    this.courses.push(course);
-  }
+    addCourse(course: Course): void {
+        this.courses.push(course);
+    }
 
-  average(): number {
-    let num = 0;
-    let sum = 0;
+    average(): number {
+        let num = 0;
+        let sum = 0;
 
-    this.courses.forEach((cours) => {
-      const average = cours.average();
-      if (average != 0) {
-        sum += average;
-        num += 1;
-      }
-    });
+        this.courses.forEach((cours) => {
+            const average = cours.average();
+            if (average != 0) {
+                sum += average;
+                num += 1;
+            }
+        });
 
-    return parseFloat((sum / num).toFixed(1));
-  }
+        return parseFloat((sum / num).toFixed(1));
+    }
 
-  toString(): string {
-    return `# ${this.id} - ${this.title}\n${this.courses.map<string>((course) => course.toString()).join("\n")}\n\nAverage Module: ${this.average()}`;
-  }
+    toString(): string {
+        return `# ${this.id} - ${this.title}\n${this.courses.map<string>((course) => course.toString()).join("\n")}\n\nAverage Module: ${this.average()}`;
+    }
 }

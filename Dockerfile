@@ -1,5 +1,5 @@
-FROM ghcr.io/puppeteer/puppeteer:21.5.2 AS base-amd64
-FROM canardconfit/puppeteer-docker:puppeteer-21.5.2-arm64 AS base-arm64
+FROM ghcr.io/puppeteer/puppeteer:23.10.1 AS base-amd64
+FROM canardconfit/puppeteer-docker:puppeteer-23.10.1-arm64 AS base-arm64
 
 FROM base-${TARGETARCH}
 

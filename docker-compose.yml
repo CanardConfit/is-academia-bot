@@ -1,11 +1,9 @@
-version: '3'
-
 services:
   is-academia-bot:
     image: canardconfit/is-academia-bot:latest
     container_name: is-academia-bot
     restart: always
     volumes:
-      - "./git-history:/app/git-history"
+      - "./git-history:/home/pptruser/git-history"
     env_file:
       - "./environment.env"
