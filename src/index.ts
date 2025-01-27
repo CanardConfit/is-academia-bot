@@ -61,7 +61,7 @@ const notes = async () => {
     }
 };
 
-schedule.scheduleJob("0 * * * *", async () => {
+schedule.scheduleJob(env.CRONJOB, async () => {
     try {
         logger.info("Scheduled task started.");
         await notes();

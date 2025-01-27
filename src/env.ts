@@ -21,6 +21,7 @@ export const schema = {
     TELEGRAM_ENABLED: Boolean,
     TELEGRAM_TOKEN: String,
     TELEGRAM_CHAT_ID: String,
+    CRONJOB: String,
 };
 
 export let env: EnvType<typeof schema>;
